@@ -31,10 +31,19 @@ export default {
         caches.open('hydrogen'),
         HydrogenSession.init(request, [env.SESSION_SECRET]),
       ]);
+      // vercel
+      const {
+        createRequestHandler,
+      } = require("@remix-run/vercel");
+      module.exports = createRequestHandler({
+        build: require("./build"),
+      });
+      
 
       /**
        * Create Hydrogen's Storefront client.
        */
+      
       const {storefront} = createStorefrontClient({
         cache,
         waitUntil,
