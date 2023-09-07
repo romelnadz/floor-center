@@ -38,7 +38,7 @@ function FeaturedCollection({collection}) {
           <Image data={image} sizes="100vw" />
         </div>
       )}
-      <h1>romel</h1>
+      <h1>{collection.title}</h1>
     </Link>
   );
 }
@@ -50,21 +50,19 @@ function RecommendedProducts({products}) {
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {({products}) => (
-            <div className="recommended-products-grid" class="w-64 border-4 border-dashed border-green-500/0 flex flex-row justify-center items-center mx-2 " >
+            <div className="recommended-products-grid">
               {products.nodes.map((product) => (
                 <Link
                   key={product.id}
                   className="recommended-product"
                   to={`/products/${product.handle}`}
-                  class="px-4 py-6 rounded-md shadow-xl border-1 border-dashed border-gray-50" 
                 >
                   <Image
                     data={product.images.nodes[0]}
                     aspectRatio="1/1"
-                    classname="w-56 h-56"
+                    sizes="(min-width: 45em) 20vw, 50vw"
                   />
-                  <h4 class="text-2xl font-medium text-gray-400">{product.title}</h4>
-                  <p className="">{product.description}</p>
+                  <h4>{product.title}</h4>
                   <small>
                     <Money data={product.priceRange.minVariantPrice} />
                   </small>
@@ -107,7 +105,6 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     id
     title
     handle
-    description
     priceRange {
       minVariantPrice {
         amount
@@ -126,7 +123,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 1, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
       }
