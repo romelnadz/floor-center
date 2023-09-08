@@ -50,17 +50,18 @@ function RecommendedProducts({products}) {
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {({products}) => (
-            <div className="recommended-products-grid">
+            <div className=" w-full flex flex-row justify-center items-center border border-1 border-dashed border-green-500 p-6"
+           >
               {products.nodes.map((product) => (
                 <Link
                   key={product.id}
-                  className="recommended-product"
+                  className="w-64 rounded-sm shadow-xl p-4 bg-slate-50"
                   to={`/products/${product.handle}`}
+                  class=""
                 >
                   <Image
                     data={product.images.nodes[0]}
-                    aspectRatio="1/1"
-                    sizes="(min-width: 45em) 20vw, 50vw"
+                    className="w-42 rounded-none"
                   />
                   <h4>{product.title}</h4>
                   <small>
